@@ -4,6 +4,8 @@ import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { Box, Button, Grid, LinearProgress, Rating } from '@mui/material'
 import ProductReviewCard from './ProductReviewCard'
+import { mens_data } from '../../../data/mens'
+import HomeSectionCard from '../HomeSectionCard/HomeSectionCard'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -254,7 +256,7 @@ export default function ProductDetails() {
                         </div>
                     </Grid>
                     <Grid item xs={5}>
-                        <h1 className='text-xl font-semibold pb-2'>Product Ratings</h1>
+                        <h1 className='text-xl font-semibold pb-2 '>Product Ratings</h1>
                         <div className='flex items-center space-x-3'>
                             <Rating value={4.5} readOnly></Rating>
                             <p className='opacity-60'>54890 Ratings</p>
@@ -309,6 +311,13 @@ export default function ProductDetails() {
                     </Grid>
                 </Grid>
             </div>
+        </section>
+        {/* similar products */}
+        <section className='pt-10'>
+          <h1 className='py-5 text-xl font-bold'>Similar Products</h1>
+          <div className='flex flex-wrap space-y-5'>
+            {mens_data.map((item)=><HomeSectionCard product={item}/>)}
+          </div>
         </section>
       </div>
     </div>
