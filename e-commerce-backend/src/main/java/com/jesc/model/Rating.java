@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Rating {
@@ -18,12 +19,12 @@ public class Rating {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToMany
+	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
 	@JsonIgnore
-	@ManyToMany
+	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	

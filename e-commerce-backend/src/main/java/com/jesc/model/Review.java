@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Review {
@@ -20,12 +21,12 @@ public class Review {
 	
 	private String review;
 	
-	@ManyToMany
+	@ManyToOne
 	@JoinColumn(name = "product_id")
 	@JsonIgnore
 	private Product product;
 	
-	@ManyToMany
+	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
