@@ -17,6 +17,7 @@ import com.jesc.model.Category;
 import com.jesc.model.Product;
 import com.jesc.repository.CategoryRepository;
 import com.jesc.repository.ProductRepository;
+import com.jesc.request.CreateProductRequest;
 
 
 @Service
@@ -105,10 +106,11 @@ public class ProductServiceImplementation implements ProductService{
 		throw new ProductException("Product not found with id - " + productId);
 	}
 
+	//Revisar esta funcion el filter no se si admite valores nulos;
 	@Override
 	public List<Product> findProductByCategroy(String category) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> products = productRepository.filterProducts(category, null, null, null, null);
+		return products;
 	}
 
 	@Override
@@ -134,6 +136,12 @@ public class ProductServiceImplementation implements ProductService{
 		List<Product> pageContent = products.subList(startIndex, endIndex);
 		Page<Product> filteredProducts = new PageImpl<>(pageContent, pageable, products.size());
 		return filteredProducts;
+	}
+
+	@Override
+	public List<Product> findAllProducts() {
+		List<Product> products = productRepository.findAll();
+		return products;
 	}
 	
 }

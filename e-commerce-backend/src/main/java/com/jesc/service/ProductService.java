@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jesc.exception.ProductException;
 import com.jesc.model.Product;
+import com.jesc.request.CreateProductRequest;
 
 @Service
 public interface ProductService {
@@ -18,4 +19,5 @@ public interface ProductService {
 	public Page<Product> getAllProduct(String category, List<String> colors, 
 			List<String> sizes, Integer minPrice, Integer maxPrice, Integer minDiscount,
 			String sort, String stock,  Integer pageNumber, Integer pageSize);
+	public List<Product> findAllProducts();
 }

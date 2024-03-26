@@ -12,5 +12,5 @@ import com.jesc.request.RatingRequest;
 @Service
 public interface RatingService {
 	public Rating createRating(RatingRequest req, User user) throws ProductException;
-	public List<Rating> getProductRating(Long ProductId);
+	public List<Rating> getProductsRating(Long ProductId);
 }

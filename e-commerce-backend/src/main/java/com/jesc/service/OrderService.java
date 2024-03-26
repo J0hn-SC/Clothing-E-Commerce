@@ -9,9 +9,9 @@ import com.jesc.model.User;
 
 public interface OrderService {
 	public Order createOrder(User user, Address shippingAddress);
-	public Order findOrderById(Long id);
-	public List<Order> userOrdershistory(Long userId);
-	public Order placeOrder(Long orderId) throws OrderException;
+	public Order findOrderById(Long id) throws OrderException;
+	public List<Order> userOrdersHistory(Long userId);
+	public Order placedOrder(Long orderId) throws OrderException;
 	public Order confirmedOrder(Long orderId) throws OrderException;
 	public Order shippedOrder(Long orderId) throws OrderException;
 	public Order deliveredOrder(Long orderId) throws OrderException;
