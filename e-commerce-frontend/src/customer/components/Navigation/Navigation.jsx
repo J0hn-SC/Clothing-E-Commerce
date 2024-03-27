@@ -1,11 +1,13 @@
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { navigation } from './NavigationData'
 import { Avatar, Button, Menu, MenuItem } from '@mui/material'
 import { deepPurple } from '@mui/material/colors'
+import AuthModal from '../../Auth/AuthModal'
+import { useDispatch, useSelector } from 'react-redux'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -19,6 +21,9 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
+  const {auth} = useSelector(store => store)
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,10 +37,29 @@ export default function Navigation() {
     setOpenAuthModal(true);
   }
 
+  const handleClose = (event) => {
+    setOpenAuthModal(false);
+  }
+
   const handleCategoryClick = (category, section, item, close) => {
     navigate(`/${category.id}/${section.id}/${item.id}`);
     close();
   }
+
+  useEffect(()=>{
+    if(jwt){
+      dispatch(getUser(jwt))
+    }
+  }, [jwt, auth.jwt])
+
+  useEffect(()=>{
+    if(auth.user){
+      handleClose();
+    }
+    if(location.pathname === "/login" || location.pathname === "/register"){
+      navigate(-1);
+    }
+  },[auth.user])
 
   return (
     <div className="bg-white relative z-40 mb-10">
@@ -313,7 +337,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {true ? (
+                  {auth.user?.firstName ? (
                     <div>
                       <Avatar className='text-white' onClick={handleUserClick} 
                       aria-controls = {open? "basic-menu" : undefined}
@@ -321,7 +345,7 @@ export default function Navigation() {
                       aria-expanded= {open? "true" : undefined}
                       sx={{bgcolor: deepPurple[500], color: "white", cursor: "pointer"}}
                       >
-                        R
+                        {auth.user?.firstName[0].toUpperCase()}
                       </Avatar>
                       {/*
                       <Button id='basic-button' aria-controls={open? "basic-menu": undefined}
@@ -380,6 +404,7 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
+      <AuthModal handleClose={handleClose} open={openAuthModal}/>
     </div>
   )
 }
